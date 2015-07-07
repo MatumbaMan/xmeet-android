@@ -5,43 +5,43 @@
 4.在res/values/styles.xml文件中（style.xml不存在请创建），加入如下style:<br>
 
 ```Java
-<style name="loading_dialog" parent="android:style/Theme.Dialog">  <br>
-        <item name="android:windowFrame">@null</item>  <br>
-        <item name="android:windowNoTitle">true</item>     <br>
-        <item name="android:windowBackground">@color/transparent_background</item>  <br>
-        <item name="android:windowIsFloating">true</item>  <br>
-        <item name="android:windowContentOverlay">@null</item>    <br>
-        <item name="android:backgroundDimEnabled">false</item>  <br>
-        <item name="android:windowIsTranslucent">false</item>  <br>
-        <item name="android:background">#00000000</item>  <br>
-    </style>  //Java  <br>
+<style name="loading_dialog" parent="android:style/Theme.Dialog"> 
+        <item name="android:windowFrame">@null</item> 
+        <item name="android:windowNoTitle">true</item>   
+        <item name="android:windowBackground">@color/transparent_background</item> 
+        <item name="android:windowIsFloating">true</item> 
+        <item name="android:windowContentOverlay">@null</item>  
+        <item name="android:backgroundDimEnabled">false</item> 
+        <item name="android:windowIsTranslucent">false</item> 
+        <item name="android:background">#00000000</item> 
+    </style>  //Java 
 ```
 5.在res/values/color.xml文件中（color.xml不存在请创建），加入如下color： <br>
 ```Java
-	<color name="transparent_background">#00000000</color> <br>
+	<color name="transparent_background">#00000000</color>
 ```
 6.在AndroidManifest.xml中注册XmeetActivity，代码如下： <br>
 ```Java
-	<activity <br>
-        android:name="com.xmeet.android.XmeetActivity" <br>
-        android:label="@string/app_name"  <br>
-        android:screenOrientation="portrait"> <br>
-    </activity> <br>
+	<activity
+        android:name="com.xmeet.android.XmeetActivity" 
+        android:label="@string/app_name" 
+        android:screenOrientation="portrait"> 
+    </activity> 
 ```
 （注：xmeet基于网络操作，请打开网络权限！） <br>
 7.使用xmeet的方法，首先实例化一个XmeetView， <br>
 ```Java
-	XmeetView view = new XmeetView(); <br>
+	XmeetView view = new XmeetView();
 ```
 然后打开xmeet， <br>
 ```Java
-	view.openXmeet(this); <br>
+	view.openXmeet(this);
 ```
 大功告成。 <br>
 当然，你还可以通过XmeetView提供的方法设置hostIp,昵称,聊天室id等， <br>
 ```Java
-	view.setGlobalDefaultHostId(""); <br>
-	view.setNickName(""); <br>
-	view.setXnestId(""); <br>
+	view.setGlobalDefaultHostId("");
+	view.setNickName(""); 
+	view.setXnestId("");
 ```
 [了解更多](http://meet.xpro.im)
