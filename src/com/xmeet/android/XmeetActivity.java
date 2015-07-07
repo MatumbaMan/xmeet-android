@@ -33,21 +33,20 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class XmeetActivity extends Activity {
 
-	private XmeetHanlder mClient = null;
+	private XmeetHanlder mClient 	= null;
 	
-	private TextView mTitle = null;
-	private ListView mListView = null;
-	private EditText mMessageEdit = null;
-	private TextView mSendButton = null;
-	private TextView mUserView = null;
-	private Dialog loadingDialog = null;
+	private TextView mTitle 		= null;
+	private ListView mListView 		= null;
+	private EditText mMessageEdit 	= null;
+	private TextView mSendButton 	= null;
+	private TextView mUserView 		= null;
+	private Dialog loadingDialog 	= null;
 	
-	private XmeetAdapter mAdapter = null;
+	private XmeetAdapter mAdapter 	= null;
 	
 	private final static String XNEST_ID =  "14009e12d791e664fc0175aecb31d833";
 	private final static String NICK_NAME = XmeetUtil.getRandomName();
-	
-//	private String mHostId = null;
+
 	private String mXnestId = null;
 	private String mNickName = null;
 	
@@ -56,7 +55,7 @@ public class XmeetActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);  
 		
-		setContentView(XmeetResource.getIdByName(getApplicationContext(), "layout", "activity_xmeet"));
+		setContentView(XmeetResource.getIdByName(getApplicationContext(), "layout", "xmeet_activity"));
 		
 		initConfig();
 
@@ -73,7 +72,6 @@ public class XmeetActivity extends Activity {
 		if(bd == null)
 			return;
 
-//		setGlobalDefaultHostId(bd.getString("host"));
 		setXnestId(bd.getString("nest"));
 		setNickName(bd.getString("nick"));
 	}

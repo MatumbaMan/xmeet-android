@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/xmeet_loading_1" android:duration="180"></item>  
+    <item android:drawable="@drawable/xmeet_loading_2" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_3" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_4" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_5" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_6" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_7" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_8" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_9" android:duration="180"></item> 
+    <item android:drawable="@drawable/xmeet_loading_10" android:duration="180"></item>  
+
+</animation-list>

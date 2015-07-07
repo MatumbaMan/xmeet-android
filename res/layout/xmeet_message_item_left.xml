@@ -31,7 +31,7 @@
                    android:focusable="false"
                    android:layout_alignParentLeft="true"
                    android:layout_alignParentTop="true"
-                   android:background="@drawable/user_default"/>
+                   android:background="@drawable/xmeet_user_default"/>
                 
                  <TextView
 	                android:id="@+id/xmeet_message_username"
@@ -53,7 +53,7 @@
 	                android:layout_marginLeft="5dp"
 	                android:layout_marginRight="30dp"
 	                android:textSize="16sp"
-	                android:background="@drawable/message_other"/>
+	                android:background="@drawable/xmeet_message_other"/>
 	           
         </RelativeLayout>
 

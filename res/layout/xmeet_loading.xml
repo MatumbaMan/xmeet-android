@@ -6,7 +6,7 @@
     
 	<ImageView
 	    android:id="@+id/xmeet_loading_image"
-        android:background="@drawable/loading_animation"
+        android:background="@drawable/xmeet_loading_animation"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center"/>
