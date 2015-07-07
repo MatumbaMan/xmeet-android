@@ -6,28 +6,26 @@ import android.os.Bundle;
 
 public class XmeetView  {
 	
-	private String mHostId = null;
 	private String mXnestId = null;
 	private String mNickName = null;
 	
 	public void openXmeet(Activity arg0) {
+		String packgeName = arg0.getApplicationInfo().packageName;
+		setXnestId(packgeName);
+		
 		Intent intent = new Intent();
 		Bundle budle = new Bundle();
-		budle.putString("host", mHostId);
 		budle.putString("nest", mXnestId);
 		budle.putString("nick", mNickName);
 		intent.putExtras(budle);
+		
 		
 		intent.setClassName(arg0.getApplicationContext(), "com.xmeet.android.XmeetActivity");
 		arg0.startActivity(intent);
 	}
 	
-	public void setGlobalDefaultHostId(String host) {
-		mHostId = host;
-	}
-	
-	public void setXnestId(String id) {
-		mXnestId = id;
+	private void setXnestId(String id) {
+		mXnestId = XmeetUtil.stringToMD5(id);
 	}
 	
 	public void setNickName(String name) {

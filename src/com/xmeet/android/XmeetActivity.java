@@ -45,9 +45,9 @@ public class XmeetActivity extends Activity {
 	private XmeetAdapter mAdapter = null;
 	
 	private final static String XNEST_ID =  "14009e12d791e664fc0175aecb31d833";
-	private final static String NICK_NAME = "WhiteAnimals";
+	private final static String NICK_NAME = XmeetUtil.getRandomName();
 	
-	private String mHostId = null;
+//	private String mHostId = null;
 	private String mXnestId = null;
 	private String mNickName = null;
 	
@@ -73,7 +73,7 @@ public class XmeetActivity extends Activity {
 		if(bd == null)
 			return;
 
-		setGlobalDefaultHostId(bd.getString("host"));
+//		setGlobalDefaultHostId(bd.getString("host"));
 		setXnestId(bd.getString("nest"));
 		setNickName(bd.getString("nick"));
 	}
@@ -85,12 +85,6 @@ public class XmeetActivity extends Activity {
 			initialize();
 			super.run();
 		}
-	}
-	
-	private void setGlobalDefaultHostId(String host) {
-		if (host == null || host == "" ||  host.isEmpty())
-			return;
-		mHostId = host + "/xgate/websocket/";
 	}
 	
 	private void setXnestId(String id) {
@@ -113,7 +107,7 @@ public class XmeetActivity extends Activity {
 			nick = getUserFromPrefrence();
 		}
 		
-		return (mHostId == null ? "ws://meet.xpro.im:8080/xgate/websocket/" : mHostId) 
+		return ("ws://meet.xpro.im:8080/xgate/websocket/") //
 				+ (mXnestId == null ? XNEST_ID : mXnestId) 
 				+ "?nickname=" 
 				+ nick;
