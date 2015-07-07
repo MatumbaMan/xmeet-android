@@ -38,10 +38,8 @@
 	view.openXmeet(this);
 ```
 大功告成。 <br>
-当然，你还可以通过XmeetView提供的方法设置hostIp,昵称,聊天室id等， <br>
+你还可以通过XmeetView提供的方法设置昵称， <br>
 ```Java
-	view.setGlobalDefaultHostId("");
 	view.setNickName(""); 
-	view.setXnestId("");
 ```
 [了解更多](http://meet.xpro.im)
