@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".XmeetActivity" >
+
+    <RelativeLayout
+        android:id="@+id/xmeet_title_layout"
+        android:layout_height="45dp"
+        android:layout_width="fill_parent"
+        android:background="#394346">
+        
+        <TextView
+            android:id="@+id/xmeet_back_button"
+           	android:layout_marginLeft="15dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:layout_alignParentLeft="true"
+	        android:drawableLeft="@drawable/xmeet_back_arrow"
+	        android:textColor="@android:color/white"
+	        android:textSize="18sp"
+	        android:text=" 返回" />
+        
+        <TextView
+            android:id="@+id/xmeet_xnest_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:textColor="#ffffff"
+	        android:textSize="18sp"
+	        android:text="创业聊天室" />
+        
+        <TextView
+            android:id="@+id/xmeet_user_name"
+            android:layout_marginRight="15dp"
+	        android:layout_width="25dp"
+	        android:layout_height="25dp"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:background="@drawable/xmeet_title_user"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/xmeet_message_layout"
+        android:layout_width="fill_parent"
+	    android:layout_height="45dp"
+	    android:layout_alignParentBottom="true"
+	    android:background="#394346"
+	    
+	    android:focusable="true"  
+   		android:focusableInTouchMode="true"
+	    >
+        <TextView
+            android:id="@+id/xmeet_message_send"
+	        android:layout_width="28dp"
+	        android:layout_height="28dp"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginRight="10dp" 
+	        android:background="@drawable/xmeet_message_send"/>
+        
+        <EditText
+            android:id="@+id/xmeet_message_edit"
+            android:layout_toLeftOf="@id/xmeet_message_send"
+            android:layout_width="fill_parent"
+	        android:layout_height="40dp"
+	        android:layout_centerVertical="true"  
+            android:layout_marginLeft="10dp"  
+            android:layout_marginRight="10dp" 
+            android:imeOptions="actionSend"
+            android:background="#ffffff"
+            android:hint="请输入..."/>
+ 
+    </RelativeLayout>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/xmeet_title_layout"
+	    android:layout_above="@id/xmeet_message_layout"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:text="xmeet"
+        android:textColor="#33b5e5"
+        android:textSize="80sp"
+        android:textStyle="bold" />
+    
+    <ListView
+        android:id="@+id/xmeet_listview"
+        android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@id/xmeet_title_layout"
+	    android:layout_above="@id/xmeet_message_layout"
+	    android:divider="@null"
+	    android:listSelector="@android:color/transparent"
+	    android:background="#e0ECECEC"/>
+
+</RelativeLayout>
