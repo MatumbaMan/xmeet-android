@@ -44,7 +44,7 @@ public class XmeetActivity extends Activity {
 	
 	private XmeetAdapter mAdapter 	= null;
 	
-	private final static String XNEST_ID =  "14009e12d791e664fc0175aecb31d833";
+	private final static String XNEST_ID =  "912ec803b2ce49e4a541068d495ab570";
 	private final static String NICK_NAME = XmeetUtil.getRandomName();
 
 	private String mXnestId = null;
