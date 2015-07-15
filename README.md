@@ -2,22 +2,8 @@
 打开根目录下的USE文件夹 <br>
 1.将xmeet-android-0.1.0.jar和Java-WebSocket-1.3.1-SNAPSHOT.jar添加到libs目录下，并在Java Build Path中添加。 <br>
 2.将drawable目录下文件拷贝到工程中的res/drawable-hdpi目录下（注意请不要有重名文件） <br>
-3.在res/values/styles.xml文件中（style.xml不存在请创建），加入如下style:<br>
-```Java
-<style name="loading_dialog" parent="android:style/Theme.Dialog"> 
-        <item name="android:windowFrame">@null</item> 
-        <item name="android:windowNoTitle">true</item>   
-        <item name="android:windowBackground">@android:color/transparent</item> 
-        <item name="android:windowIsFloating">true</item> 
-        <item name="android:windowContentOverlay">@null</item>  
-        <item name="android:backgroundDimEnabled">false</item> 
-        <item name="android:windowIsTranslucent">false</item> 
-        <item name="android:background">#00000000</item> 
-    </style>  //Java 
-```
-
 （注：xmeet基于网络操作，请打开网络权限！） <br>
-4.使用xmeet的方法，首先实例化一个XmeetView， <br>
+3.使用xmeet的方法，首先实例化一个XmeetView， <br>
 ```Java
 	XmeetView view = new XmeetView();
 ```

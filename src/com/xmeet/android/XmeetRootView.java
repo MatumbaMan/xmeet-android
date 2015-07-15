@@ -6,8 +6,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ class XmeetRootView extends RelativeLayout {
 	private EditText			messageText;
 	
 	private TextView			xmeetText;
+	private ProgressBar		progress;
 	private ListView			messageList;
 	
 	public XmeetRootView(Context context) {
@@ -31,6 +34,7 @@ class XmeetRootView extends RelativeLayout {
 		setBottomView(context);
 		setXmeetText(context);
 		setListView(context);
+		setProgress(context);
 	}
 
 	private void setTopView(Context context) {
@@ -116,6 +120,16 @@ class XmeetRootView extends RelativeLayout {
 
 		bottomLayout.setId(XmeetUtil.xmeet_message_layout);
 		this.addView(bottomLayout);
+	}
+	
+	private void setProgress(Context context) {
+		progress = new ProgressBar(context);
+		LayoutParams messageParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		messageParam.addRule(RelativeLayout.CENTER_IN_PARENT);
+		progress.setLayoutParams(messageParam);
+		progress.setVisibility(View.INVISIBLE);
+		progress.setId(XmeetUtil.xmeet_progress);
+		this.addView(progress);
 	}
 	
 	private void setXmeetText(Context context) {

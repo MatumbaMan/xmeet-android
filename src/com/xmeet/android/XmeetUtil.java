@@ -14,6 +14,7 @@ class XmeetUtil {
 	public static int xmeet_back_button = xmeet_title_layout + 1;
 	public static int xmeet_xnest_name = xmeet_back_button + 1;
 	public static int xmeet_user_name = xmeet_xnest_name + 1;
+	public static int xmeet_progress = xmeet_user_name + 1;
 	
 	public static int xmeet_message_layout = 8001;
 	public static int xmeet_message_send = xmeet_message_layout + 1;

@@ -26,6 +26,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
@@ -39,7 +40,8 @@ public class XmeetActivity extends Activity {
 	private EditText mMessageEdit 	= null;
 	private TextView mSendButton 	= null;
 	private TextView mUserView 		= null;
-	private XmeetDialog loadingDialog 	= null;
+//	private XmeetDialog loadingDialog 	= null;
+	private ProgressBar mProgress = null;
 	
 	private XmeetAdapter mAdapter 	= null;
 	
@@ -123,6 +125,7 @@ public class XmeetActivity extends Activity {
 		mMessageEdit = (EditText) findViewById(XmeetUtil.xmeet_message_edit);
 		mSendButton = (TextView) findViewById(XmeetUtil.xmeet_message_send);
 		mUserView = (TextView) findViewById(XmeetUtil.xmeet_user_name);
+		mProgress = (ProgressBar) findViewById(XmeetUtil.xmeet_progress);
 		
 		findViewById(XmeetUtil.xmeet_back_button).setOnClickListener(new OnClickListener() {
 			
@@ -360,7 +363,8 @@ public class XmeetActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				loadingDialog.show();
+//				loadingDialog.show();
+				mProgress.setVisibility(View.VISIBLE);
 			}
 		});
 	}
@@ -369,13 +373,14 @@ public class XmeetActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				loadingDialog.dismiss();
+//				loadingDialog.dismiss();
+				mProgress.setVisibility(View.INVISIBLE);
 			}
 		});
 	}
 	
 	private void createDialog() {
-		loadingDialog = new XmeetDialog(this);
+//		loadingDialog = new XmeetDialog(this);
 	}
 	
 }
