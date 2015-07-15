@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -82,23 +81,23 @@ class XmeetAdapter extends BaseAdapter {
 			switch (type) {
 				case 0:
 					mHolder1 = new ViewHolder();
-					contentView = LayoutInflater.from(mContext).inflate(XmeetResource.getIdByName(mContext, "layout", "xmeet_message_item_left"), null);
+					contentView = new XmeetItemView(mContext, XmeetUtil.item_left);
 					
-					mHolder1.time = (TextView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_time"));
-					mHolder1.head = (ImageView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_head"));
-					mHolder1.payload = (TextView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_payload"));
-					mHolder1.name = (TextView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_username"));
+					mHolder1.time = (TextView) contentView.findViewById(XmeetUtil.xmeet_message_time);
+					mHolder1.head = (ImageView) contentView.findViewById(XmeetUtil.xmeet_message_head);
+					mHolder1.payload = (TextView) contentView.findViewById(XmeetUtil.xmeet_message_payload);
+					mHolder1.name = (TextView) contentView.findViewById(XmeetUtil.xmeet_message_username);
 					contentView.setTag(mHolder1);
 					break;
 				case 1:
 				case 2:
 					mHolder2 = new ViewHolder();
-					contentView = LayoutInflater.from(mContext).inflate( XmeetResource.getIdByName(mContext, "layout", "xmeet_message_item_right"), null);
+					contentView = new XmeetItemView(mContext, XmeetUtil.item_right);
 					
-					mHolder2.time = (TextView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_time"));
-					mHolder2.head = (ImageView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_head"));
-					mHolder2.payload = (TextView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_payload"));
-					mHolder2.name = (TextView) contentView.findViewById(XmeetResource.getIdByName(mContext, "id", "xmeet_message_username"));
+					mHolder2.time = (TextView) contentView.findViewById(XmeetUtil.xmeet_message_time);
+					mHolder2.head = (ImageView) contentView.findViewById(XmeetUtil.xmeet_message_head);
+					mHolder2.payload = (TextView) contentView.findViewById(XmeetUtil.xmeet_message_payload);
+					mHolder2.name = (TextView) contentView.findViewById(XmeetUtil.xmeet_message_username);
 					contentView.setTag(mHolder2);
 
 					break;

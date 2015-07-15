@@ -1,7 +1,9 @@
 package com.xmeet.android;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.java_websocket.drafts.Draft_17;
@@ -16,16 +18,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.drawable.AnimationDrawable;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +39,7 @@ public class XmeetActivity extends Activity {
 	private EditText mMessageEdit 	= null;
 	private TextView mSendButton 	= null;
 	private TextView mUserView 		= null;
-	private Dialog loadingDialog 	= null;
+	private XmeetDialog loadingDialog 	= null;
 	
 	private XmeetAdapter mAdapter 	= null;
 	
@@ -55,7 +54,8 @@ public class XmeetActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);  
 		
-		setContentView(XmeetResource.getIdByName(getApplicationContext(), "layout", "xmeet_activity"));
+		XmeetRootView view = new XmeetRootView(this);
+		setContentView(view);
 		
 		initConfig();
 
@@ -97,35 +97,42 @@ public class XmeetActivity extends Activity {
 		mNickName = name;
 	}
 	
-	private String buildUrl() {
+	private String buildUri() {
 		String nick = null;
 		if (mNickName != null && mNickName != "") {
 			nick = mNickName;
 		} else {
 			nick = getUserFromPrefrence();
 		}
-		
+		String name = nick;
+		try {
+			name = URLEncoder.encode(nick, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return ("ws://meet.xpro.im:8080/xgate/websocket/") //
 				+ (mXnestId == null ? XNEST_ID : mXnestId) 
 				+ "?nickname=" 
-				+ nick;
+				+ name;
 	}
 	
 	private void initViews() {
 		createDialog();
-		mTitle = (TextView) findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_xnest_name"));
-		mListView = (ListView) findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_listview"));
-		mMessageEdit = (EditText) findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_message_edit"));
-		mSendButton = (TextView) findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_message_send"));
-		mUserView = (TextView) findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_user_name"));
+		mTitle = (TextView) findViewById( XmeetUtil.xmeet_xnest_name);
+		mListView = (ListView) findViewById(XmeetUtil.xmeet_listview);
+		mMessageEdit = (EditText) findViewById(XmeetUtil.xmeet_message_edit);
+		mSendButton = (TextView) findViewById(XmeetUtil.xmeet_message_send);
+		mUserView = (TextView) findViewById(XmeetUtil.xmeet_user_name);
 		
-		findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_back_button")).setOnClickListener(new OnClickListener() {
+		findViewById(XmeetUtil.xmeet_back_button).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				finish();
-				mClient.removeListener();
-				mClient.close();
+				if (mClient != null) {
+					mClient.removeListener();
+					mClient.close();
+				}
 			}
 		});
 		
@@ -170,8 +177,13 @@ public class XmeetActivity extends Activity {
 	}
 	
 	private void sendMessage() {
+		if (mClient == null) 
+			return;
+		
 		String message = mMessageEdit.getText().toString();
-		if (message != null && message != "" && !message.isEmpty()) {
+		if (message != null && 
+			message != "" && 
+			!message.isEmpty()) {
 			mClient.send(message);
 			runOnUiThread(new Runnable() {
 				@Override
@@ -185,7 +197,8 @@ public class XmeetActivity extends Activity {
 	private void initialize() {
 		try {
 			showLoading();
-			mClient = new XmeetHanlder(new URI(buildUrl()), new Draft_17());
+			
+			mClient = new XmeetHanlder(new URI(buildUri()), new Draft_17());
 			mClient.addListener(mListener);
 			mClient.connectBlocking();
 		} catch (URISyntaxException e) {
@@ -316,23 +329,25 @@ public class XmeetActivity extends Activity {
 	private void showRenameAlert() {		
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.xmeet_rename_alert);
+		dialog.setContentView(new XmeetRenameView(this));
 		
-		final EditText text = (EditText) dialog.findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_rename_edit"));
-		dialog.findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_rename_cancle")).setOnClickListener(new OnClickListener() {
+		final EditText text = (EditText) dialog.findViewById(XmeetUtil.xmeet_rename_edit);
+		dialog.findViewById(XmeetUtil.xmeet_rename_cancle).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				dialog.dismiss();
 			}
 		});
-		dialog.findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_rename_ok")).setOnClickListener(new OnClickListener() {
+		dialog.findViewById(XmeetUtil.xmeet_rename_ok).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				dialog.dismiss();
 				String message = text.getText().toString();
-				if (message != null && message != "" && !message.isEmpty()) {
+				if (message != null && 
+					message != "" && 
+					!message.isEmpty()) {
 					mClient.send("@changename:" + message);
 				}
 			}
@@ -360,17 +375,7 @@ public class XmeetActivity extends Activity {
 	}
 	
 	private void createDialog() {
-		loadingDialog = new Dialog(this, XmeetResource.getIdByName(getApplicationContext(), "style", "loading_dialog"));// 创建自定义样式dialog  
-		View v = LayoutInflater.from(this).inflate(XmeetResource.getIdByName(getApplicationContext(), "layout", "xmeet_loading"), null);
-		
-		loadingDialog.setContentView(v);
-		
-		ImageView imageView = (ImageView) v.findViewById(XmeetResource.getIdByName(getApplicationContext(), "id", "xmeet_loading_image"));
-		AnimationDrawable animationDrawable = (AnimationDrawable)imageView.getBackground();  
-        
-        //开始或者继续动画播放  
-        animationDrawable.start();   
-
-        loadingDialog.setCancelable(false);
+		loadingDialog = new XmeetDialog(this);
 	}
+	
 }
