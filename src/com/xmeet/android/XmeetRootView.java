@@ -1,7 +1,5 @@
 package com.xmeet.android;
 
-import com.xmeet.android.R;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -46,7 +44,7 @@ class XmeetRootView extends RelativeLayout {
 		backButton.setText(" 返回");
 		backButton.setTextColor(Color.parseColor("#ffffff"));
 		backButton.setTextSize(18.f);
-		Drawable drawable= getResources().getDrawable(R.drawable.xmeet_back_arrow);   
+		Drawable drawable= getResources().getDrawable(XmeetResource.getIdByName(context, "drawable", "xmeet_back_arrow"));   
 		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
 		backButton.setCompoundDrawables(drawable,null,null,null);  
 		
@@ -70,7 +68,7 @@ class XmeetRootView extends RelativeLayout {
 		topLayout.addView(nestName);
 		
 		userName = new TextView(context);
-		userName.setBackgroundResource(R.drawable.xmeet_title_user);
+		userName.setBackgroundResource(XmeetResource.getIdByName(context, "drawable", "xmeet_title_user"));
 		
 		LayoutParams userParam = new LayoutParams(XmeetUtil.dip2px(context, 25), XmeetUtil.dip2px(context, 25));
 		userParam.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -96,7 +94,7 @@ class XmeetRootView extends RelativeLayout {
 		bottomLayout.setLayoutParams(layoutParam);
 		
 		sendButton = new TextView(context);
-		sendButton.setBackgroundResource(R.drawable.xmeet_message_send);
+		sendButton.setBackgroundResource(XmeetResource.getIdByName(context, "drawable", "xmeet_message_send"));
 		
 		LayoutParams sendParam = new LayoutParams(XmeetUtil.dip2px(context, 28), XmeetUtil.dip2px(context, 28));
 		sendParam.addRule(RelativeLayout.CENTER_VERTICAL);

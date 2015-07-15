@@ -21,6 +21,7 @@ public class XmeetView  {
 		
 		
 		intent.setClassName(arg0.getApplicationContext(), "com.xmeet.android.XmeetActivity");
+//		intent.setClass(arg0.getApplicationContext(), XmeetActivity.class);
 		arg0.startActivity(intent);
 	}
 	

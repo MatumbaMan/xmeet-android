@@ -1,7 +1,5 @@
 package com.xmeet.android;
 
-import com.xmeet.android.R;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -58,7 +56,7 @@ private TextView			timeMessage;
 		mesageLayout.setLayoutParams(layoutParam);
 		
 		headImage = new ImageView(context);
-		headImage.setBackgroundResource(R.drawable.xmeet_user_default);
+		headImage.setBackgroundResource(XmeetResource.getIdByName(context, "drawable", "xmeet_user_default"));
 		android.widget.RelativeLayout.LayoutParams headParam = new android.widget.RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		
 		if (type == XmeetUtil.item_left)
@@ -87,11 +85,11 @@ private TextView			timeMessage;
 		android.widget.RelativeLayout.LayoutParams payloadParam = new android.widget.RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		
 		if (type == XmeetUtil.item_left) {
-			messageText.setBackgroundResource(R.drawable.xmeet_message_other);
+			messageText.setBackgroundResource(XmeetResource.getIdByName(context, "drawable", "xmeet_message_other"));
 			payloadParam.addRule(RelativeLayout.RIGHT_OF, XmeetUtil.xmeet_message_username);
 			payloadParam.setMargins(XmeetUtil.dip2px(context, 5), 0, XmeetUtil.dip2px(context, 30), 0);
 		} else {
-			messageText.setBackgroundResource(R.drawable.xmeet_message_mine);
+			messageText.setBackgroundResource(XmeetResource.getIdByName(context, "drawable", "xmeet_message_mine"));
 			payloadParam.addRule(RelativeLayout.LEFT_OF, XmeetUtil.xmeet_message_username);
 			payloadParam.setMargins(XmeetUtil.dip2px(context, 30), 0, XmeetUtil.dip2px(context, 5), 0);
 		}
