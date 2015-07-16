@@ -151,7 +151,8 @@ class XmeetRootView extends RelativeLayout {
 		messageList = new ListView(context);
 		messageList.setBackgroundColor(Color.parseColor("#e0ECECEC"));
 		messageList.setDivider(null);
-//		messageList.setSelector(Color.TRANSPARENT);
+		messageList.setCacheColorHint(Color.TRANSPARENT);
+		messageList.setSelector(R.drawable.xmeet_listselector);
 		
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		lp.addRule(RelativeLayout.BELOW, XmeetUtil.xmeet_title_layout);

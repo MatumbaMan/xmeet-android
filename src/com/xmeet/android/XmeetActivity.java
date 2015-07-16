@@ -6,18 +6,13 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.List;
 
-import org.java_websocket.drafts.Draft_17;
-
 import com.xmeet.android.XmeetParser.XmeetListener;
 
 import android.os.Bundle;
 import android.os.Looper;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -46,7 +41,6 @@ public class XmeetActivity extends Activity {
 	private XmeetAdapter mAdapter 	= null;
 	
 	private final static String XNEST_ID =  "912ec803b2ce49e4a541068d495ab570";
-	private final static String NICK_NAME = XmeetUtil.getRandomName();
 
 	private String mXnestId = null;
 	private String mNickName = null;
@@ -104,7 +98,7 @@ public class XmeetActivity extends Activity {
 		if (mNickName != null && mNickName != "") {
 			nick = mNickName;
 		} else {
-			nick = getUserFromPrefrence();
+			nick = XmeetUtil.getUserFromPrefrence(this);
 		}
 		String name = nick;
 		try {
@@ -159,16 +153,6 @@ public class XmeetActivity extends Activity {
 			}
 		});
 		
-//		mMessageEdit.setOnKeyListener(new OnKeyListener() {
-//			
-//			@Override
-//			public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-//				if (arg1 == KeyEvent.KEYCODE_ENTER) {
-//					sendMessage();
-//				}
-//				return false;
-//			}
-//		});
 		mUserView.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -201,7 +185,7 @@ public class XmeetActivity extends Activity {
 		try {
 			showLoading();
 			
-			mClient = new XmeetHanlder(new URI(buildUri()), new Draft_17());
+			mClient = new XmeetHanlder(new URI(buildUri()), this);
 			mClient.addListener(mListener);
 			mClient.connectBlocking();
 		} catch (URISyntaxException e) {
@@ -261,7 +245,7 @@ public class XmeetActivity extends Activity {
 		@Override
 		public void onChangeName(XmeetMessage message) {
 			addMessage(message);
-			setUserFromPrefrence(message.nickName);
+			XmeetUtil.setUserFromPrefrence(XmeetActivity.this, message.nickName);
 		}
 
 		@Override
@@ -317,17 +301,17 @@ public class XmeetActivity extends Activity {
 		return true;
 	}
 	
-	private String getUserFromPrefrence() {
-		SharedPreferences sh = getSharedPreferences("xmeet_prefrence", Context.MODE_PRIVATE);
-		return sh.getString("nickname", NICK_NAME);
-	}
-
-	private void setUserFromPrefrence(String nickname) {
-		SharedPreferences sh = getSharedPreferences("xmeet_prefrence", Context.MODE_PRIVATE);
-		Editor dt = sh.edit();
-		dt.putString("nickname", nickname);
-		dt.commit();
-	}
+//	private String getUserFromPrefrence() {
+//		SharedPreferences sh = getSharedPreferences("xmeet_prefrence", Context.MODE_PRIVATE);
+//		return sh.getString("nickname", "");
+//	}
+//
+//	private void setUserFromPrefrence(String nickname) {
+//		SharedPreferences sh = getSharedPreferences("xmeet_prefrence", Context.MODE_PRIVATE);
+//		Editor dt = sh.edit();
+//		dt.putString("nickname", nickname);
+//		dt.commit();
+//	}
 	
 	private void showRenameAlert() {		
 		final Dialog dialog = new Dialog(this);

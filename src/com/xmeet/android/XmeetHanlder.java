@@ -3,8 +3,9 @@ package com.xmeet.android;
 import java.net.URI;
 
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
+
+import android.content.Context;
 
 import com.xmeet.android.XmeetParser.XmeetListener;
 
@@ -12,9 +13,9 @@ class XmeetHanlder extends WebSocketClient {
 	
 	private XmeetParser mParser = null;
 
-	public XmeetHanlder(URI serverUri, Draft draft) {
-		super(serverUri, draft);
-		mParser = new XmeetParser();
+	public XmeetHanlder(URI serverUri, Context context) {
+		super(serverUri);
+		mParser = new XmeetParser(context);
 	}
 	
 	public void addListener(XmeetListener listener) {

@@ -7,15 +7,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
 class XmeetParser {
 	
 	private XmeetListener mListener;
 	private XmeetMembers mMembers;
 	
 	private String mId;
+	private Context mContext;
 	
-	public XmeetParser() {
+	public XmeetParser(Context context) {
 		mMembers = new XmeetMembers();
+		mContext = context;
 	}
 	
 	public interface XmeetListener {
@@ -108,8 +112,10 @@ class XmeetParser {
 				user.id 			= info.getString("pid");
 				user.nickname 		= info.getString("nickname");
 				
-				if (mId.equals(user.id))
+				if (mId.equals(user.id)) {
+					XmeetUtil.setUserFromPrefrence(mContext, user.nickname);
 					user.isSelf = true;
+				}
 				
 				mMembers.addMember(user);
 			}

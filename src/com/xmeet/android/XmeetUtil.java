@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 class XmeetUtil {
 	public static int item_left = 0;
@@ -67,5 +69,17 @@ class XmeetUtil {
 			name = name + (char) (Math.random ()*26+'A');
 		}
 		return "Android" + name;
+	}
+	
+	public static String getUserFromPrefrence(Context context) {
+		SharedPreferences sh = context.getSharedPreferences("xmeet_prefrence", Context.MODE_PRIVATE);
+		return sh.getString("nickname", "");
+	}
+
+	public static void setUserFromPrefrence(Context context, String nickname) {
+		SharedPreferences sh = context.getSharedPreferences("xmeet_prefrence", Context.MODE_PRIVATE);
+		Editor dt = sh.edit();
+		dt.putString("nickname", nickname);
+		dt.commit();
 	}
 }

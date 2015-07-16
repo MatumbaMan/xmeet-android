@@ -25,6 +25,7 @@ private TextView			timeMessage;
 		int padding = XmeetUtil.dip2px(context, 6);
 		setOrientation(LinearLayout.VERTICAL);
 		setPadding(padding, padding, padding, padding);
+		setBackgroundColor(Color.TRANSPARENT);
 		
 		setTime(context);
 		setMessage(context);
