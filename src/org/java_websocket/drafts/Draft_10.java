@@ -1,4 +1,6 @@
 package org.java_websocket.drafts;
+import android.annotation.SuppressLint;
+
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
@@ -28,6 +30,7 @@ import org.java_websocket.handshake.ServerHandshakeBuilder;
 import org.java_websocket.util.Base64;
 import org.java_websocket.util.Charsetfunctions;
 
+@SuppressLint("UseValueOf")
 public class Draft_10 extends Draft {
 
 	private class IncompleteException extends Throwable {
@@ -61,6 +64,7 @@ public class Draft_10 extends Draft {
 	}
 
 	private ByteBuffer incompleteframe;
+	@SuppressWarnings("unused")
 	private Framedata fragmentedframe = null;
 
 	private final Random reuseableRandom = new Random();
@@ -267,6 +271,7 @@ public class Draft_10 extends Draft {
 					break; // go on with the normal frame receival
 				} catch ( IncompleteException e ) {
 					// extending as much as suggested
+					@SuppressWarnings("unused")
 					int oldsize = incompleteframe.limit();
 					ByteBuffer extendedframe = ByteBuffer.allocate( checkAlloc( e.getPreferedSize() ) );
 					assert ( extendedframe.limit() > incompleteframe.limit() );

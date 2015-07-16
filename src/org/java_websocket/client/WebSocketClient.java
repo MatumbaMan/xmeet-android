@@ -215,12 +215,22 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 		String path;
 		String part1 = uri.getPath();
 		String part2 = uri.getQuery();
-//		try {
-//			String tmp = URLEncoder.encode(part2, "UTF-8");
-//			part2 = "nickname=" + tmp.substring(11);
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
+		
+		/***
+		 * TODO: nickname encode 
+		 * **/
+		try {
+			String[] arr = part2.split("=");
+			if (arr.length == 2) {
+				part2 = arr[0] + "=" + URLEncoder.encode(arr[1], "UTF-8");
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		/**
+		 * END
+		 * */
 		
 		if( part1 == null || part1.length() == 0 )
 			path = "/";
