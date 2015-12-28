@@ -20,6 +20,8 @@ class XmeetRootView extends RelativeLayout {
 	private RelativeLayout 	bottomLayout;
 	private TextView			sendButton;
 	private EditText			messageText;
+	private TextView			messageVoice;
+	private TextView			typeButton;
 	
 	private TextView			xmeetText;
 	private ProgressBar		progress;
@@ -104,6 +106,17 @@ class XmeetRootView extends RelativeLayout {
 		sendButton.setId(XmeetUtil.xmeet_message_send);
 		bottomLayout.addView(sendButton);
 		
+		typeButton = new TextView(context);
+		typeButton.setBackgroundResource(XmeetResource.getIdByName(context, "drawable", "xmeet_message_write"));
+		
+		LayoutParams typeParams = new LayoutParams(XmeetUtil.dip2px(context, 28), XmeetUtil.dip2px(context, 28));
+		typeParams.addRule(RelativeLayout.CENTER_VERTICAL);
+		typeParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		typeParams.setMarginStart(XmeetUtil.dip2px(context, 10));
+		typeButton.setLayoutParams(typeParams);
+		typeButton.setId(XmeetUtil.xmeet_message_type);
+		bottomLayout.addView(typeButton);
+		
 		messageText = new EditText(context);
 		messageText.setHint("请输入...");
 		messageText.setLines(1);
@@ -111,10 +124,25 @@ class XmeetRootView extends RelativeLayout {
 		LayoutParams messageParam = new LayoutParams(LayoutParams.MATCH_PARENT, XmeetUtil.dip2px(context, 40));
 		messageParam.addRule(RelativeLayout.CENTER_VERTICAL);
 		messageParam.setMarginEnd(XmeetUtil.dip2px(context, 48));
-		messageParam.setMarginStart(XmeetUtil.dip2px(context, 10));
+		messageParam.setMarginStart(XmeetUtil.dip2px(context, 48));
 		messageText.setLayoutParams(messageParam);
-		messageText.setId(XmeetUtil.xmeet_message_edit);
+		messageText.setId(XmeetUtil.xmeet_message_text);
 		bottomLayout.addView(messageText);
+		
+		messageVoice = new TextView(context);
+		messageVoice.setText("按住说话");
+		messageVoice.setBackgroundColor(Color.parseColor("#ffffff"));
+		messageVoice.setGravity(Gravity.CENTER);
+		messageVoice.setTextSize(18.0f);
+		
+		LayoutParams voiceParam = new LayoutParams(LayoutParams.MATCH_PARENT, XmeetUtil.dip2px(context, 34));
+		voiceParam.addRule(RelativeLayout.CENTER_VERTICAL);
+		voiceParam.setMarginEnd(XmeetUtil.dip2px(context, 48));
+		voiceParam.setMarginStart(XmeetUtil.dip2px(context, 48));
+		
+		messageVoice.setLayoutParams(voiceParam);
+		messageVoice.setId(XmeetUtil.xmeet_message_voice);
+		bottomLayout.addView(messageVoice);
 
 		bottomLayout.setId(XmeetUtil.xmeet_message_layout);
 		this.addView(bottomLayout);

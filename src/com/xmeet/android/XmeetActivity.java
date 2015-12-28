@@ -15,10 +15,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -33,7 +36,9 @@ public class XmeetActivity extends Activity {
 	private TextView mTitle 		= null;
 	private ListView mListView 		= null;
 	private EditText mMessageEdit 	= null;
+	private TextView mMessageVoice	= null;
 	private TextView mSendButton 	= null;
+	private TextView mMessageType	= null;
 	private TextView mUserView 		= null;
 //	private XmeetDialog loadingDialog 	= null;
 	private ProgressBar mProgress = null;
@@ -44,6 +49,8 @@ public class XmeetActivity extends Activity {
 
 	private String mXnestId = null;
 	private String mNickName = null;
+	
+	private boolean mIsVoice = true; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +64,8 @@ public class XmeetActivity extends Activity {
 
 		initViews();
 		
-		SocketThread thread= new SocketThread();
-		thread.start();
+//		SocketThread thread= new SocketThread();
+//		thread.start();
 	}
 
 	private void initConfig() {
@@ -112,14 +119,49 @@ public class XmeetActivity extends Activity {
 				+ name;
 	}
 	
+	private void showVoice() {
+		mMessageVoice.setVisibility(View.VISIBLE);
+		mMessageEdit.setVisibility(View.INVISIBLE);
+		mMessageType.setBackgroundResource(XmeetResource.getIdByName(this, "drawable", "xmeet_message_write"));
+		hiddenKeyboard();
+	}
+	
+	private void showWrite() {
+		mMessageVoice.setVisibility(View.INVISIBLE);
+		mMessageEdit.setVisibility(View.VISIBLE);
+		mMessageType.setBackgroundResource(XmeetResource.getIdByName(this, "drawable", "xmeet_message_voice"));
+		shwoKeyboard();
+	}
+	
+	private void hiddenKeyboard() {
+		InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
+			imm.hideSoftInputFromWindow(mMessageEdit.getWindowToken(), 0);
+		}				
+		
+		mMessageEdit.clearFocus();
+	}
+	
+	private void shwoKeyboard() {
+		mMessageEdit.setFocusable(true);
+		mMessageEdit.setFocusableInTouchMode(true);
+		mMessageEdit.requestFocus();
+		
+		InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+		imm.showSoftInput(mMessageEdit, 0);
+	}
+	
 	private void initViews() {
 		createDialog();
 		mTitle = (TextView) findViewById( XmeetUtil.xmeet_xnest_name);
 		mListView = (ListView) findViewById(XmeetUtil.xmeet_listview);
-		mMessageEdit = (EditText) findViewById(XmeetUtil.xmeet_message_edit);
+		mMessageEdit = (EditText) findViewById(XmeetUtil.xmeet_message_text);
 		mSendButton = (TextView) findViewById(XmeetUtil.xmeet_message_send);
 		mUserView = (TextView) findViewById(XmeetUtil.xmeet_user_name);
 		mProgress = (ProgressBar) findViewById(XmeetUtil.xmeet_progress);
+		
+		mMessageVoice = (TextView) findViewById(XmeetUtil.xmeet_message_voice);
+		mMessageType = (TextView) findViewById(XmeetUtil.xmeet_message_type);
 		
 		findViewById(XmeetUtil.xmeet_back_button).setOnClickListener(new OnClickListener() {
 			
@@ -160,7 +202,34 @@ public class XmeetActivity extends Activity {
 				showRenameAlert();
 			}
 		});
+		
+		mMessageType.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				mIsVoice = !mIsVoice;
+				if ( mIsVoice )
+					showVoice() ;
+				else
+					showWrite();
+			}
+		});
+		
+		mMessageVoice.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent event) {
+				int action = event.getAction();
+				if (action == MotionEvent.ACTION_DOWN) {
+					
+				} else if (action == MotionEvent.ACTION_UP) {
+					
+				}
+				return false;
+			}
+		});
 
+		showVoice();
 	}
 	
 	private void sendMessage() {

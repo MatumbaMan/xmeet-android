@@ -20,7 +20,11 @@ class XmeetUtil {
 	
 	public static int xmeet_message_layout = 8001;
 	public static int xmeet_message_send = xmeet_message_layout + 1;
-	public static int xmeet_message_edit = xmeet_message_send + 1;
+	public static int xmeet_message_text = xmeet_message_send + 1;
+	
+	public static int xmeet_message_type = xmeet_message_text + 1;
+	public static int xmeet_message_voice = xmeet_message_type + 1;
+	
 	public static int xmeet_listview = 9001;
 	
 	public static int xmeet_message_time = xmeet_listview + 1;
