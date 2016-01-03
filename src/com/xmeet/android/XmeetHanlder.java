@@ -1,6 +1,7 @@
 package com.xmeet.android;
 
 import java.net.URI;
+import java.nio.ByteBuffer;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -41,7 +42,13 @@ class XmeetHanlder extends WebSocketClient {
 	public void onMessage(String message) {
 		mParser.parseMessage(message);
 	}
-
+	
+	@Override
+	public void onMessage(ByteBuffer bytes) {
+		
+		super.onMessage(bytes);
+	}
+	
 	@Override
 	public void onOpen(ServerHandshake arg0) {
 		mParser.onOpen();

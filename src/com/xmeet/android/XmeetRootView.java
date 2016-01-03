@@ -20,8 +20,9 @@ class XmeetRootView extends RelativeLayout {
 	private RelativeLayout 	bottomLayout;
 	private TextView			sendButton;
 	private EditText			messageText;
-	private TextView			messageVoice;
 	private TextView			typeButton;
+	
+	private XmeetVoiceButton	messageVoice;
 	
 	private TextView			xmeetText;
 	private ProgressBar		progress;
@@ -129,11 +130,12 @@ class XmeetRootView extends RelativeLayout {
 		messageText.setId(XmeetUtil.xmeet_message_text);
 		bottomLayout.addView(messageText);
 		
-		messageVoice = new TextView(context);
+		messageVoice = new XmeetVoiceButton(context);
 		messageVoice.setText("按住说话");
 		messageVoice.setBackgroundColor(Color.parseColor("#ffffff"));
-		messageVoice.setGravity(Gravity.CENTER);
-		messageVoice.setTextSize(18.0f);
+//		messageVoice.setGravity(Gravity.CENTER);
+		messageVoice.setTextSize(16.0f);
+		messageVoice.setPadding(0, 0, 0, 0);
 		
 		LayoutParams voiceParam = new LayoutParams(LayoutParams.MATCH_PARENT, XmeetUtil.dip2px(context, 34));
 		voiceParam.addRule(RelativeLayout.CENTER_VERTICAL);

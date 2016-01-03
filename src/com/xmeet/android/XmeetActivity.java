@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import com.xmeet.android.XmeetParser.XmeetListener;
+import com.xmeet.android.XmeetVoiceButton.AudioFinishRecorderListener;
 
 import android.os.Bundle;
 import android.os.Looper;
@@ -15,10 +16,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -36,10 +35,12 @@ public class XmeetActivity extends Activity {
 	private TextView mTitle 		= null;
 	private ListView mListView 		= null;
 	private EditText mMessageEdit 	= null;
-	private TextView mMessageVoice	= null;
 	private TextView mSendButton 	= null;
 	private TextView mMessageType	= null;
 	private TextView mUserView 		= null;
+	
+	private XmeetVoiceButton mMessageVoice	= null;
+	
 //	private XmeetDialog loadingDialog 	= null;
 	private ProgressBar mProgress = null;
 	
@@ -64,8 +65,8 @@ public class XmeetActivity extends Activity {
 
 		initViews();
 		
-//		SocketThread thread= new SocketThread();
-//		thread.start();
+		SocketThread thread= new SocketThread();
+		thread.start();
 	}
 
 	private void initConfig() {
@@ -160,7 +161,7 @@ public class XmeetActivity extends Activity {
 		mUserView = (TextView) findViewById(XmeetUtil.xmeet_user_name);
 		mProgress = (ProgressBar) findViewById(XmeetUtil.xmeet_progress);
 		
-		mMessageVoice = (TextView) findViewById(XmeetUtil.xmeet_message_voice);
+		mMessageVoice = (XmeetVoiceButton) findViewById(XmeetUtil.xmeet_message_voice);
 		mMessageType = (TextView) findViewById(XmeetUtil.xmeet_message_type);
 		
 		findViewById(XmeetUtil.xmeet_back_button).setOnClickListener(new OnClickListener() {
@@ -215,21 +216,39 @@ public class XmeetActivity extends Activity {
 			}
 		});
 		
-		mMessageVoice.setOnTouchListener(new OnTouchListener() {
+		mMessageVoice.setAudioFinishRecorderListener(new AudioFinishRecorderListener() {
 			
 			@Override
-			public boolean onTouch(View arg0, MotionEvent event) {
-				int action = event.getAction();
-				if (action == MotionEvent.ACTION_DOWN) {
-					
-				} else if (action == MotionEvent.ACTION_UP) {
-					
-				}
-				return false;
+			public void onFinish(float seconds, String filePath) {
+				sendVoice(filePath);
 			}
 		});
+//		mMessageVoice.setOnTouchListener(new OnTouchListener() {
+//			
+//			@Override
+//			public boolean onTouch(View arg0, MotionEvent event) {
+//				int action = event.getAction();
+//				if (action == MotionEvent.ACTION_DOWN) {
+//					showToast("down");
+//				} else if (action == MotionEvent.ACTION_UP) {
+//					showToast("up");
+//				}
+//				return false;
+//			}
+//		});
 
 		showVoice();
+	}
+	
+	private void sendVoice(String file) {
+		if (mClient == null) 
+			return;
+		
+		byte[] message = XmeetUtil.File2byte(file);
+		if (message != null) {
+			mClient.send(message);
+		}
+		
 	}
 	
 	private void sendMessage() {

@@ -1,5 +1,10 @@
 package com.xmeet.android;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +29,10 @@ class XmeetUtil {
 	
 	public static int xmeet_message_type = xmeet_message_text + 1;
 	public static int xmeet_message_voice = xmeet_message_type + 1;
+	
+	public static int xmeet_voice_icon = xmeet_message_voice + 1;
+	public static int xmeet_voice_voice = xmeet_voice_icon + 1;
+	public static int xmeet_voice_label = xmeet_voice_voice + 1;
 	
 	public static int xmeet_listview = 9001;
 	
@@ -86,4 +95,35 @@ class XmeetUtil {
 		dt.putString("nickname", nickname);
 		dt.commit();
 	}
+	
+	public static byte[] File2byte(String filePath) {  
+        byte[] buffer = null;  
+        try  
+        {  
+            File file = new File(filePath);  
+            FileInputStream fis = new FileInputStream(file);  
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] header = new byte[]{0,0,0,0,0,0,0,1};
+            bos.write(header);
+            
+            byte[] b = new byte[1024];  
+            int n;  
+            while ((n = fis.read(b)) != -1)  
+            {  
+                bos.write(b, 0, n);  
+            }  
+            fis.close();  
+            bos.close();  
+            buffer = bos.toByteArray();  
+        }  
+        catch (FileNotFoundException e)  
+        {  
+            e.printStackTrace();  
+        }  
+        catch (IOException e)  
+        {  
+            e.printStackTrace();  
+        }  
+        return buffer;  
+    }  
 }
