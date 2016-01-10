@@ -80,6 +80,8 @@ class XmeetParser {
 				parseChangeName(object);
 			} else if (type.equals("history")) {
 				parseHisgory(object);
+			} else if (type.equals("audio")) {
+				parseAudio(object);
 			}
 			
 		} catch (JSONException e) {
@@ -256,6 +258,31 @@ class XmeetParser {
 			
 			if (mListener != null)
 				mListener.onHistory(list);
+		}
+	}
+	
+	private void parseAudio(JSONObject object) {
+		try {
+			String id = object.getString("from");
+			String payload = object.getString("payload");
+			String send_time = object.getString("send_time");
+			
+			XmeetUserInfo user = mMembers.queryMember(id);
+			String nickname = user.nickname == null ? "" : user.nickname;
+			
+			XmeetMessage message = new XmeetMessage();
+			message.nickName = nickname;
+			message.payload = payload;
+			message.sendTime = send_time;
+			message.type = (user.isSelf ? 1 : 0);
+			
+			if (mListener != null) 
+				XmeetVoiceDownloader.getInstance().downloadFile(mListener, message);
+//				mListener.onMessage(message);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+			onError("Normal:" + e.toString());
 		}
 	}
 }

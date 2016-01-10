@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 class XmeetAdapter extends BaseAdapter {
@@ -16,16 +19,30 @@ class XmeetAdapter extends BaseAdapter {
 	private ViewHolder mHolder1 ;
 	private ViewHolder mHolder2 ;
 	
+	private int mMinItemWidth; //最小的item宽度
+    private int mMaxItemWidth; //最大的item宽度
+	
 	private List<XmeetMessage> mData = new ArrayList<XmeetMessage>();
 
 	public XmeetAdapter(Context context, XmeetMessage message) {
 		mContext = context;
 		mData.add(message);
+		init(context);
 	}
 	
 	public XmeetAdapter(Context context, List<XmeetMessage> list) {
 		mContext = context;
 		mData = list;
+		init(context);
+	}
+	
+	private void init(Context context) {
+		//获取屏幕的宽度
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        mMaxItemWidth = (int) (outMetrics.widthPixels * 0.7f);
+        mMinItemWidth = (int) (outMetrics.widthPixels * 0.15f);//(int) (outMetrics.widthPixels * 0.15f);
 	}
 	
 	public void addMessage(XmeetMessage message) {
@@ -51,7 +68,7 @@ class XmeetAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int arg0) {
-		return null;
+		return mData.get(arg0);
 	}
 
 	@Override
@@ -124,7 +141,15 @@ class XmeetAdapter extends BaseAdapter {
 		switch (type) {
 		case 0:
 			mHolder1.time.setText(message.sendTime);
-			mHolder1.payload.setText(message.payload);
+//			mHolder1.payload.setText(message.payload);
+			if (message.payload.startsWith("audio:")) {
+				mHolder1.payload.setCompoundDrawablesWithIntrinsicBounds(0, 0, XmeetResource.getIdByName(mContext, "drawable", "xmeet_voice_playing_other"), 0);
+				LayoutParams lp = (LayoutParams) mHolder1.payload.getLayoutParams();
+				lp.width = (int) (mMinItemWidth + (mMaxItemWidth / 60.0f) * XmeetUtil.getAmrDuration(message.payload.replace("audio:", "")));
+
+			} else {
+				mHolder1.payload.setText(message.payload);
+			}
 			mHolder1.name.setText(message.nickName);
 			
 			mHolder1.payload.setVisibility(View.VISIBLE);
@@ -133,7 +158,13 @@ class XmeetAdapter extends BaseAdapter {
 			break;
 		case 1:
 			mHolder2.time.setText(message.sendTime);
-			mHolder2.payload.setText(message.payload);
+			if (message.payload.startsWith("audio:")) {
+				mHolder2.payload.setCompoundDrawablesWithIntrinsicBounds(0, 0, XmeetResource.getIdByName(mContext, "drawable", "xmeet_voice_playing_mine"), 0);
+				LayoutParams lp = (LayoutParams) mHolder2.payload.getLayoutParams();
+				lp.width = (int) (mMinItemWidth + (mMaxItemWidth / 60.0f) * XmeetUtil.getAmrDuration(message.payload.replace("audio:", "")));
+			} else {
+				mHolder2.payload.setText(message.payload);
+			}
 			mHolder2.name.setText(message.nickName);
 			
 			mHolder2.payload.setVisibility(View.VISIBLE);
@@ -153,5 +184,4 @@ class XmeetAdapter extends BaseAdapter {
 		
 		return contentView;
 	}
-
 }

@@ -34,7 +34,7 @@ class XmeetHanlder extends WebSocketClient {
 
 	@Override
 	public void onError(Exception ex) {
-		ex.printStackTrace();  
+		ex.printStackTrace(); 
 		mParser.onError(ex.toString());
 	}
 
@@ -45,7 +45,8 @@ class XmeetHanlder extends WebSocketClient {
 	
 	@Override
 	public void onMessage(ByteBuffer bytes) {
-		
+		String name = "sdfsdf";
+		name = name.toUpperCase();
 		super.onMessage(bytes);
 	}
 	

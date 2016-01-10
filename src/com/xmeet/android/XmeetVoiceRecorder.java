@@ -13,7 +13,7 @@ public class XmeetVoiceRecorder {
 	
 	private MediaRecorder mRecorder = null;
 	private boolean isPrepare;
-	private final static String DIR_NAME = android.os.Environment.getExternalStorageDirectory() + "/xmeet/";
+	private final static String DIR_NAME = android.os.Environment.getExternalStorageDirectory() + "/xmeet/local/";
 	private String mCurrentFilePath;
 
 	public static XmeetVoiceRecorder getInstance() {

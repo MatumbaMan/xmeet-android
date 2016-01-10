@@ -21,6 +21,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -223,19 +225,18 @@ public class XmeetActivity extends Activity {
 				sendVoice(filePath);
 			}
 		});
-//		mMessageVoice.setOnTouchListener(new OnTouchListener() {
-//			
-//			@Override
-//			public boolean onTouch(View arg0, MotionEvent event) {
-//				int action = event.getAction();
-//				if (action == MotionEvent.ACTION_DOWN) {
-//					showToast("down");
-//				} else if (action == MotionEvent.ACTION_UP) {
-//					showToast("up");
-//				}
-//				return false;
-//			}
-//		});
+
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				XmeetMessage message = (XmeetMessage) mAdapter.getItem(arg2);
+				if (message != null && message.payload.startsWith("audio:")) {
+					XmeetVoicePlaying.getInstance().play(message.payload.replace("audio:", ""));
+				}
+			}
+		});
 
 		showVoice();
 	}
@@ -311,6 +312,8 @@ public class XmeetActivity extends Activity {
 				@Override
 				public void run() {
 					mTitle.setText("未连接");
+					showToast("连接xmeet失败，请检查网络连接之后再试");
+					finish();
 					}
 				});
 		}
