@@ -1,5 +1,6 @@
 package com.xmeet.android;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -232,8 +233,14 @@ public class XmeetActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				XmeetMessage message = (XmeetMessage) mAdapter.getItem(arg2);
+				
 				if (message != null && message.payload.startsWith("audio:")) {
-					XmeetVoicePlaying.getInstance().play(message.payload.replace("audio:", ""));
+					String filePath = message.payload.replace("audio:", "");
+					File file = new File(filePath);
+					if (file.exists())
+						XmeetVoicePlaying.getInstance().play(filePath);
+					else
+						showToast("当前语音不存在，请重试");
 				}
 			}
 		});
