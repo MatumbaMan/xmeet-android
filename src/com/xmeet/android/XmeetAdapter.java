@@ -143,6 +143,7 @@ class XmeetAdapter extends BaseAdapter {
 			mHolder1.time.setText(message.sendTime);
 //			mHolder1.payload.setText(message.payload);
 			if (message.payload.startsWith("audio:")) {
+				mHolder1.payload.setText("");
 				mHolder1.payload.setCompoundDrawablesWithIntrinsicBounds(0, 0, XmeetResource.getIdByName(mContext, "drawable", "xmeet_voice_playing_other"), 0);
 				LayoutParams lp = (LayoutParams) mHolder1.payload.getLayoutParams();
 				lp.width = (int) (mMinItemWidth + (mMaxItemWidth / 60.0f) * XmeetUtil.getAmrDuration(message.payload.replace("audio:", "")));
@@ -159,6 +160,7 @@ class XmeetAdapter extends BaseAdapter {
 		case 1:
 			mHolder2.time.setText(message.sendTime);
 			if (message.payload.startsWith("audio:")) {
+				mHolder2.payload.setText("");
 				mHolder2.payload.setCompoundDrawablesWithIntrinsicBounds(0, 0, XmeetResource.getIdByName(mContext, "drawable", "xmeet_voice_playing_mine"), 0);
 				LayoutParams lp = (LayoutParams) mHolder2.payload.getLayoutParams();
 				lp.width = (int) (mMinItemWidth + (mMaxItemWidth / 60.0f) * XmeetUtil.getAmrDuration(message.payload.replace("audio:", "")));
