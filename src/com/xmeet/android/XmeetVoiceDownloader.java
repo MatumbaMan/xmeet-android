@@ -1,15 +1,10 @@
 package com.xmeet.android;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
-import java.io.OutputStream;
 import java.io.RandomAccessFile;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -74,43 +69,6 @@ public class XmeetVoiceDownloader {
 		@Override
 		public void run() {
 			downloadFile();
-//			String urlStr = mMessage.payload;  
-//            String fileName = getFileName(urlStr); 
-//            mMessage.payload = "audio:" + fileName;
-//            OutputStream output=null;  
-//            try {  
-//                URL url=new URL(urlStr);  
-//                HttpURLConnection conn=(HttpURLConnection)url.openConnection();  
-//                //取得inputStream，并将流中的信息写入SDCard  
-//                  
-//                File file = new File(fileName);  
-//                InputStream input = conn.getInputStream();  
-//                if(file.exists()){  
-//                    System.out.println("exits");  
-//                } else {  
-//                    file.createNewFile();//新建文件  
-//                    output=new FileOutputStream(file);  
-//                    //读取大文件  
-//                    byte[] buffer=new byte[4*1024];  
-//                    while(input.read(buffer)!=-1){  
-//                        output.write(buffer);  
-//                    }  
-//                    output.flush();  
-//                }  
-//            } catch (MalformedURLException e) {  
-//                e.printStackTrace();  
-//            } catch (IOException e) {  
-//                e.printStackTrace();  
-//            }finally{  
-//                try {  
-//                        output.close();  
-//                        System.out.println("success");  
-//                        mListener.onMessage(mMessage);
-//                    } catch (IOException e) {  
-//                        System.out.println("fail");  
-//                        e.printStackTrace();  
-//                    }  
-//            }  
 		}
 	}
 	
