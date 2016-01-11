@@ -239,6 +239,12 @@ class XmeetParser {
 				if (mId.equals(user.id))
 					user.isSelf = true;
 				
+				String type = info.optString("type");
+				if (type != null && type.equals("audio")) {
+					XmeetVoiceDownloader loader = new XmeetVoiceDownloader();
+					loader.downloadFile(null, message);
+				}
+				
 				list.add(message);
 			}
 			
